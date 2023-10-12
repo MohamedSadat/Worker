@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
+	  <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
+	  <PackageReference Include="Dapper" Version="2.0.151" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Cdal">
+      <HintPath>..\..\..\Work\GIT\sources\Cdal.dll</HintPath>
+    </Reference>
+    <Reference Include="CG.GLModule">
+      <HintPath>..\..\..\Work\GIT\sources\CG.GLModule.dll</HintPath>
+    </Reference>
+    <Reference Include="CG.Infrastructure">
+      <HintPath>..\..\..\Work\GIT\sources\CG.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="CGBL">
+      <HintPath>..\..\..\Work\GIT\sources\CGBL.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
