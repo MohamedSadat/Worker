@@ -18,16 +18,16 @@
 
   <ItemGroup>
     <Reference Include="Cdal">
-      <HintPath>..\..\..\Work\GIT\sources\Cdal.dll</HintPath>
+      <HintPath>..\..\Sources\Cdal.dll</HintPath>
     </Reference>
     <Reference Include="CG.GLModule">
-      <HintPath>..\..\..\Work\GIT\sources\CG.GLModule.dll</HintPath>
+      <HintPath>..\..\Sources\CG.GLModule.dll</HintPath>
     </Reference>
     <Reference Include="CG.Infrastructure">
-      <HintPath>..\..\..\Work\GIT\sources\CG.Infrastructure.dll</HintPath>
+      <HintPath>..\..\Sources\CG.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="CGBL">
-      <HintPath>..\..\..\Work\GIT\sources\CGBL.dll</HintPath>
+      <HintPath>..\..\Sources\CGBL.dll</HintPath>
     </Reference>
   </ItemGroup>
 

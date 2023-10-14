@@ -5,20 +5,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using WorkerService.Data;
 
 namespace WorkerService.Config
 {
     public class WorkerAppState : IAppState
     {
-        public string ConMain { get; set; }
-        public string ConLog { get; set; }
-        public CompanyModel Company { get; set; }
+        public string ConMain { get; set; } = "";
+        public string ConLog { get; set; } = "";
+
+        public CompanyModel Company { get; set; }=new CompanyModel();
         public TAppSource AppSource { get; set; }
         public string AppVersion { get; set; }
-        public string CompanyId { get; set; }
+        public string CompanyId { get; set; } = "Test";
         public string CompanyName { get; set; }
         public bool init { get; set; }
+        [JsonIgnore]
         public string logo { get; set; }
         public int ShowDelivery { get; set; }
         public int ShowInventory { get; set; }
@@ -39,7 +43,10 @@ namespace WorkerService.Config
         public string DefLangusge { get; set; }
         public string DefCurrency { get; set; }
         public int Decimels { get; set; }
+        [JsonIgnore]
         public List<Users> UserSessions { get; set; }
+        [JsonIgnore]
         public List<ItemModel> itemModels { get; set; }
+        public List<ServerModel> Servers { get; set; } = new List<ServerModel>();
     }
 }

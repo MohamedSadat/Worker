@@ -9,17 +9,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WorkerService.Config;
+using WorkerService.Data;
+using WorkerService.Services;
 
-namespace WorkerService.Services
+namespace WorkerService.Workers
 {
-    public sealed class Worker : BackgroundService
+    public sealed class DBWorker : BackgroundService
     {
-        private readonly ILogger<Worker> _logger;
+        private readonly ILogger<DBWorker> _logger;
 
         //for signal completion
         private readonly IHostApplicationLifetime _hostApplicationLifetime;
-        public Worker(
-            IHostApplicationLifetime hostApplicationLifetime, ILogger<Worker> logger) =>
+        public DBWorker(
+            IHostApplicationLifetime hostApplicationLifetime, ILogger<DBWorker> logger) =>
         (_hostApplicationLifetime, _logger) = (hostApplicationLifetime, logger);
         //  _logger = logger;
 
@@ -27,7 +29,7 @@ namespace WorkerService.Services
         {
             MemoryCacheOptions opt = new MemoryCacheOptions();
 
-            WorkerCache<LedgerTableModel> xcache = new WorkerCache<LedgerTableModel>(new MemoryCache(opt));
+            CacheService<LedgerTableModel> xcache = new CacheService<LedgerTableModel>(new MemoryCache(opt));
 
             while (!stoppingToken.IsCancellationRequested)
             {
@@ -44,18 +46,27 @@ namespace WorkerService.Services
                     Console.WriteLine("Cache Not empty");
 
                 }
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                _logger.LogInformation("DB Worker running at: {time}", DateTimeOffset.Now);
 
                 var x = new COAQueryService(GlobalConfiguration.app);
-                var r = await x.GetLedgerAccountsAsync(new CG.Infrastructure.CGModels.CGFilters.LedgerAccountFilter { Company = GlobalConfiguration.app.Company.CoID });
-                Console.WriteLine($"COA Count. {r.Count}");
-                if (items.Count == 0)
+                try
                 {
-                    Console.WriteLine("Writing the cache");
-                    xcache.SetCache(r);
+                    var r = await x.GetLedgerAccountsAsync(new CG.Infrastructure.CGModels.CGFilters.LedgerAccountFilter { Company = GlobalConfiguration.app.Company.CoID });
+                    Console.WriteLine($"COA Count. {r.Count}");
+                    GlobalConfiguration.logs.Add(new LogModel { Message = $"COA Count. {r.Count}", LogDate = DateTime.Now });
+                    if (items.Count == 0)
+                    {
+                        Console.WriteLine("Writing the cache");
+                        xcache.SetCache(r);
 
+                    }
                 }
-                await Task.Delay(8_000, stoppingToken);
+                catch(Exception ex)
+                {
+                    Console.WriteLine($"DB err {ex.Message}");
+                }
+            
+                await Task.Delay(10_000, stoppingToken);
 
                 // When completed, the entire app host will stop.
                 //   _hostApplicationLifetime.StopApplication();

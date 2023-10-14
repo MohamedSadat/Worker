@@ -6,15 +6,20 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WorkerService.Config;
+using WorkerService.Data;
 
 namespace WorkerService.Services
 {
-    internal class WorkerSerializer
+    internal class SerializeService
     {
-        public void Serialize(IAppState app)
+        public async Task Serialize(IAppState app)
         {
-            var j = JsonSerializer.Serialize(app);
-            File.WriteAllText("appsetting.json", j);
+  
+            string fileName = "appsetting.json";
+            using FileStream createStream = File.Create(fileName);
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            await JsonSerializer.SerializeAsync(createStream, app, options);
+            await createStream.DisposeAsync();
         }
         public IAppState Deserialize()
         {

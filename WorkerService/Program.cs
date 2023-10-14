@@ -7,6 +7,7 @@ using CG.GLModule.Services;
 using CG.Infrastructure.System;
 using System.Text.Json;
 using WorkerService.Config;
+using WorkerService.Data;
 
 namespace WorkerService
 {
@@ -14,17 +15,27 @@ namespace WorkerService
     {
         static async Task Main(string[] args)
         {
-         
-            var xcompany = new CompanyQueryService(GlobalConfiguration.app);
-            GlobalConfiguration. app.Company = await xcompany.GetCompany("Test");
+         try
+            {
+           
+                //   GlobalConfiguration.app.Servers.Add("k");
 
-            Cdal.GlobalConfig.comodel = GlobalConfiguration.app.Company;
-            Console.WriteLine(GlobalConfiguration.app.Company.CoName);
-            var j = JsonSerializer.Serialize(GlobalConfiguration.app);
-            File.WriteAllText("appsetting.json", j);
+                var xcompany = new CompanyQueryService(GlobalConfiguration.app);
+                GlobalConfiguration.app.Company = await xcompany.GetCompany("Test");
 
-            GlobalConfiguration.CreateHostBuilder(args).Build().Run();
-            Console.WriteLine("Hello, World!");
+                Cdal.GlobalConfig.comodel = GlobalConfiguration.app.Company;
+                Console.WriteLine(GlobalConfiguration.app.Company.CoName);
+               // var j = JsonSerializer.Serialize(GlobalConfiguration.app);
+              //  File.WriteAllText("appsetting.json", j);
+
+                GlobalConfiguration.CreateHostBuilder(args).Build().Run();
+                Console.WriteLine("Hello, World!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+     
         }
 
   

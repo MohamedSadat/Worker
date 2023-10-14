@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace WorkerService.Services
 {
-    public class WorkerCache<T> where T : class
+    public class CacheService<T> where T : class
     {
         private readonly IMemoryCache memory;
 
-        public WorkerCache(IMemoryCache _memory)
+        public CacheService(IMemoryCache _memory)
         {
             memory = _memory;
         }
