@@ -2,6 +2,7 @@
 using CG.Infrastructure.CGModels;
 using CG.Infrastructure.System;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
@@ -16,27 +17,54 @@ using WorkerService.Services;
 
 namespace WorkerService.Workers
 {
-    internal class LogWorker : BackgroundService
+    public sealed class LogWorker : BackgroundService
     {
         private readonly ILogger<DBWorker> _logger;
 
         //for signal completion
         private readonly IHostApplicationLifetime _hostApplicationLifetime;
-        public LogWorker(IHostApplicationLifetime hostApplicationLifetime, ILogger<DBWorker> logger) =>
-        (_hostApplicationLifetime, _logger) = (hostApplicationLifetime, logger);
+        private readonly IMonitorService _monitorService;
+        public LogWorker(IHostApplicationLifetime hostApplicationLifetime, ILogger<DBWorker> logger, IMonitorService monitorService)
+        {
+            this._hostApplicationLifetime = hostApplicationLifetime;
+            this._logger = logger;
+            this._monitorService = monitorService;
+          _hostApplicationLifetime.ApplicationStopping.Register(OnShutdown);
+            _hostApplicationLifetime.ApplicationStarted.Register(OnStarted);
+            _hostApplicationLifetime.ApplicationStopped.Register(OnStopped);
+        }
+        private void OnStarted()
+        {
+            _logger.LogInformation("OnStarted has been called.");
+        }
+        private void OnStopped()
+        {
+            _logger.LogInformation("OnStopped has been called.");
+        }
+        private void OnShutdown()
+        {
+            _logger.LogInformation("OnShutdown has been called.");
+        }
+
+
+      //  (_hostApplicationLifetime, _logger, _monitorService) = (hostApplicationLifetime, logger, monitorService);
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-
             while (!stoppingToken.IsCancellationRequested)
             {
+              
+                _logger.LogInformation("Logging Worker running at: {time}  ", DateTimeOffset.Now);
+             //   Console.WriteLine($"Log thread {Thread.CurrentThread.ManagedThreadId}");
 
-                _logger.LogInformation("Logging Worker running at: {time}", DateTimeOffset.Now);
                 foreach (var address in GlobalConfiguration.app.Servers)
                 {
-                    if (await MonitorService.CheckReachability(address) == true)
-                    {
-                        GlobalConfiguration.logs.Add(new LogModel { Message = $"{address.ServerName} is Healthy", LogDate = DateTime.Now,ErrorCode=200 });
+//                    if (await _monitorService.CheckReachability(address) == true)
+                        //Using Task.Run to run the method on a background thread
+                        if (await Task.Run(()=> _monitorService.CheckReachability(address)) == true)
+
+                        {
+                            GlobalConfiguration.logs.Add(new LogModel { Message = $"{address.ServerName} is Healthy", LogDate = DateTime.Now,ErrorCode=200 });
 
                     }
                     else
@@ -49,6 +77,7 @@ namespace WorkerService.Workers
                 string fileName = "log.json";
                 using FileStream createStream = File.Create(fileName);
                 var options = new JsonSerializerOptions { WriteIndented = true };
+             
                 await JsonSerializer.SerializeAsync(createStream, GlobalConfiguration.logs, options);
                 await createStream.DisposeAsync();
                 await Task.Delay(20_000, stoppingToken);

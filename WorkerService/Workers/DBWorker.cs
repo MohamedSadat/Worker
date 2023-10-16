@@ -30,6 +30,7 @@ namespace WorkerService.Workers
             MemoryCacheOptions opt = new MemoryCacheOptions();
 
             CacheService<LedgerTableModel> xcache = new CacheService<LedgerTableModel>(new MemoryCache(opt));
+       //     Console.WriteLine($"DBThread {Thread.CurrentThread.ManagedThreadId}");
 
             while (!stoppingToken.IsCancellationRequested)
             {

@@ -9,9 +9,10 @@ using WorkerService.Data;
 
 namespace WorkerService.Services
 {
-    internal static class MonitorService
+    public class MonitorService : IMonitorService
     {
-       public static async Task<bool> CheckReachability(ServerModel address)
+
+        public async Task<bool> CheckReachability(ServerModel address)
         {
             var ping = new Ping();
             try
@@ -20,10 +21,13 @@ namespace WorkerService.Services
                 PingOptions options = new PingOptions
                 {
                     DontFragment = true,
-                    
+
                 };
                 PingReply reply = await ping.SendPingAsync(hostName);
-                Console.WriteLine($"Ping status for ({hostName}): {reply.Status}");
+                Console.WriteLine($"Thread id {Thread.CurrentThread.ManagedThreadId}");
+
+
+                 Console.WriteLine($"Ping status for ({hostName}): {reply.Status}");
                 if (reply is { Status: IPStatus.Success })
                 {
                     Console.WriteLine($"Address: {reply.Address}");

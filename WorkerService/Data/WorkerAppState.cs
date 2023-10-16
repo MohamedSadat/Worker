@@ -48,5 +48,6 @@ namespace WorkerService.Config
         [JsonIgnore]
         public List<ItemModel> itemModels { get; set; }
         public List<ServerModel> Servers { get; set; } = new List<ServerModel>();
+        public bool Connected { get; set; }
     }
 }

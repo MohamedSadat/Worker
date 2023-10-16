@@ -16,6 +16,9 @@ namespace WorkerService.Config
     {
         public static WorkerAppState app = new WorkerAppState();
         public static List<LogModel> logs = new List<LogModel>();
+        public static IHost? host;
+        public static IHostBuilder builder;
+        public static HostApplicationBuilder appbuilder;
 
         static GlobalConfiguration()
         {
@@ -33,13 +36,33 @@ namespace WorkerService.Config
            
         }
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-  Host.CreateDefaultBuilder(args)
-      .ConfigureServices((hostContext, services) =>
-      {
-          services.AddHostedService<DBWorker>();
-          services.AddHostedService<MyBackgroundService>();
-          services.AddHostedService<LogWorker>();
-      });
+Host.CreateDefaultBuilder(args)
+.ConfigureServices(
+(hostContext, services) =>
+{
+  services.AddHostedService<DBWorker>();
+  services.AddHostedService<MyBackgroundService>();
+  services.AddHostedService<LogWorker>();
+  services.AddSingleton<IMonitorService, MonitorService>();
+  services.AddSingleton<SerializeService>();
+  services.AddMemoryCache();
+
+
+});
+        public static HostApplicationBuilder CreateApptBuilder(string[] args)
+        {
+
+            appbuilder = Host.CreateApplicationBuilder(args);
+            appbuilder.Services.AddHostedService<DBWorker>();
+            appbuilder.Services.AddHostedService<MyBackgroundService>();
+            appbuilder.Services.AddHostedService<LogWorker>();
+            appbuilder.Services.AddSingleton<IMonitorService, MonitorService>();
+            appbuilder.Services.AddSingleton<SerializeService>();
+            appbuilder.Services.AddMemoryCache();
+            return appbuilder;
+
+        }
+
 
     }
 }
