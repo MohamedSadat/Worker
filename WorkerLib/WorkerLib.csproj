@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="CG.Infrastructure">
+			<HintPath>..\..\Sources\CG.Infrastructure.dll</HintPath>
+		</Reference>
+		<Reference Include="Cdal">
+			<HintPath>..\..\Sources\Cdal.dll</HintPath>
+		</Reference>
+		<Reference Include="CG.GLModule">
+			<HintPath>..\..\Sources\CG.GLModule.dll</HintPath>
+			</Reference>
+		<Reference Include="CG.InvModule">
+		  <HintPath>..\..\Sources\CG.InvModule.dll</HintPath>
+		</Reference>
+		<Reference Include="CGBL">
+			<HintPath>..\..\Sources\CGBL.dll</HintPath>
+		</Reference>
+			
+	</ItemGroup>
+</Project>

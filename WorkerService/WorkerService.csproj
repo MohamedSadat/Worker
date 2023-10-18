@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WorkerLib\WorkerLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Cdal">
       <HintPath>..\..\Sources\Cdal.dll</HintPath>
     </Reference>

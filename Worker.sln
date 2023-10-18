@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerService", "WorkerService\WorkerService.csproj", "{BFE30827-154C-445D-BBE6-B041C9AD996E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkerService", "WorkerService\WorkerService.csproj", "{BFE30827-154C-445D-BBE6-B041C9AD996E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CGQuoye", "CGQuoye\CGQuoye.csproj", "{D0B0F44B-0172-4DDC-83D2-EDC09C054810}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CGQuoye", "CGQuoye\CGQuoye.csproj", "{D0B0F44B-0172-4DDC-83D2-EDC09C054810}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerLib", "WorkerLib\WorkerLib.csproj", "{C8D5152A-99DE-4371-931F-2D11A6BBBFAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D0B0F44B-0172-4DDC-83D2-EDC09C054810}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0B0F44B-0172-4DDC-83D2-EDC09C054810}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0B0F44B-0172-4DDC-83D2-EDC09C054810}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8D5152A-99DE-4371-931F-2D11A6BBBFAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8D5152A-99DE-4371-931F-2D11A6BBBFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8D5152A-99DE-4371-931F-2D11A6BBBFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8D5152A-99DE-4371-931F-2D11A6BBBFAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

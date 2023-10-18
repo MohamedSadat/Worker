@@ -11,6 +11,7 @@ using WorkerService.Data;
 using CG.Infrastructure.CGConfiguration;
 using WorkerService.Services;
 using WorkerService.Workers;
+using WorkerLib.Data;
 
 namespace WorkerService
 {
@@ -21,20 +22,42 @@ namespace WorkerService
         {
             try
             {
-
+           
                 var xcompany = new CompanyQueryService(GlobalConfiguration.app);
                 GlobalConfiguration.app.Company = await xcompany.GetCompany("Test");
                 Cdal.GlobalConfig.comodel = GlobalConfiguration.app.Company;
 
-                //GlobalConfiguration.builder = GlobalConfiguration.CreateHostBuilder(args);
-                GlobalConfiguration.appbuilder = GlobalConfiguration.CreateApptBuilder(args);
-                GlobalConfiguration.host = GlobalConfiguration.appbuilder.Build();
+               var builder = Host.CreateApplicationBuilder();
+                builder.Services.AddCacheWorkerDependencyGroup();
+                builder.Services.AddSingleton<IAppState,WorkerLib.Data.WorkerAppState>();
+                builder.Services.AddSingleton<CachWorkerSetting>();
+                var app=builder.Build();
+                
+                //init app state
+                using (var serviceScope = app.Services.CreateScope())
+                {
+                    var services = serviceScope.ServiceProvider;
 
-                // GlobalConfiguration.host=GlobalConfiguration.builder.Build();
-                await GlobalConfiguration.host.RunAsync();
+                    var myappdep = services.GetRequiredService<IAppState>();
+                    myappdep.itemModels = new List<CG.Infrastructure.CGModels.ItemModel>();
+                    myappdep.Company = GlobalConfiguration.app.Company;
+                    myappdep.ConMain = GlobalConfiguration.app.ConMain;
+                    myappdep.ConLog = GlobalConfiguration.app.ConLog;
+
+                      var cachesetting = services.GetRequiredService<CachWorkerSetting>();
+                      cachesetting.Logs = new List<WorkerLib.Data.LogModel>();
+
+                }
+                //return control to main thread
+                 Task.Run(()=> app.RunAsync());
 
 
                 Console.WriteLine("Hello, World!");
+              var k=  Console.ReadLine();
+                if(k=="q")
+                {
+                  await  app.StopAsync();
+                }
             }
             catch (Exception ex)
             {
@@ -42,25 +65,6 @@ namespace WorkerService
             }
 
 
-            //HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
-            //builder.Services.AddSingleton<MonitorLoop>();
-            //builder.Services.AddHostedService<QueuedHostedService>();
-            //builder.Services.AddSingleton<IBackgroundTaskQueue>(_ =>
-            //{
-            //    if (!int.TryParse(builder.Configuration["QueueCapacity"], out var queueCapacity))
-            //    {
-            //        queueCapacity = 100;
-            //    }
-
-            //    return new DefBackQueue(queueCapacity);
-            //});
-
-            //IHost host = builder.Build();
-
-            //MonitorLoop monitorLoop = host.Services.GetRequiredService<MonitorLoop>()!;
-            //monitorLoop.StartMonitorLoop();
-
-            //host.Run();
 
         }
 

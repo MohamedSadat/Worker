@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CG.Infrastructure.CGConfiguration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -46,19 +47,20 @@ Host.CreateDefaultBuilder(args)
   services.AddSingleton<IMonitorService, MonitorService>();
   services.AddSingleton<SerializeService>();
   services.AddMemoryCache();
-
+    
 
 });
         public static HostApplicationBuilder CreateApptBuilder(string[] args)
         {
 
             appbuilder = Host.CreateApplicationBuilder(args);
-            appbuilder.Services.AddHostedService<DBWorker>();
-            appbuilder.Services.AddHostedService<MyBackgroundService>();
-            appbuilder.Services.AddHostedService<LogWorker>();
-            appbuilder.Services.AddSingleton<IMonitorService, MonitorService>();
-            appbuilder.Services.AddSingleton<SerializeService>();
-            appbuilder.Services.AddMemoryCache();
+            appbuilder.Services.AddSingleton<IAppState,WorkerAppState>();
+        //    appbuilder.Services.AddHostedService<DBWorker>();
+         //   appbuilder.Services.AddHostedService<MyBackgroundService>();
+        //    appbuilder.Services.AddHostedService<LogWorker>();
+         //   appbuilder.Services.AddSingleton<IMonitorService, MonitorService>();
+       //     appbuilder.Services.AddSingleton<SerializeService>();
+       //     appbuilder.Services.AddMemoryCache();
             return appbuilder;
 
         }
