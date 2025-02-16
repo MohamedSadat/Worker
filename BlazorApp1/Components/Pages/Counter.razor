@@ -1,0 +1,43 @@
+﻿@page "/counter"
+@using HoastedServiceLib
+@rendermode InteractiveServer
+@inject ICounterService CounterService
+
+ @implements IDisposable 
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+<p>Current Count: @currentCount</p>
+<button class="btn btn-primary" @onclick="UpdateCounter">UpdateCounter</button>
+
+@code {
+    private int currentCount = 0;
+    private Timer _timer;
+    protected override void OnInitialized()
+    {
+        // Initialize current count
+        currentCount = CounterService.CurrentCount;
+
+        // Set up a timer to update the UI every second
+        _timer = new Timer(UpdateCounter, null, 0, 1000);
+    }
+    private void UpdateCounter(object state)
+    {
+        // Retrieve the latest count and refresh the UI
+        currentCount = CounterService.CurrentCount;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        _timer?.Dispose();
+    }
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+  
+
+}

@@ -1,0 +1,50 @@
+﻿
+@page "/queue-task"
+@using HoastedServiceLib
+@using RestSharp
+@inject RestClient rest
+@inject IBackgroundTaskQueue TaskQueue
+@inject ICounterService CounterService
+<h3>Queue Background Task</h3>
+<p>Current Count: @CounterService.CurrentCount</p>
+<button class="btn btn-primary" @onclick="QueueTask">Queue Task to Increment Counter</button>
+
+<p>status is @status</p>
+@code {
+
+    string status = "";
+    private async Task QueueTask()
+    {
+
+        var request = new RestRequest("/systemlog/SaveLog", Method.Post);
+        //CG key
+        request.AddHeader("Content-Type", "application/json");
+        request.AddHeader("Accept", "application/json");
+        // request.AddBody(new { Msg = "Hello" });
+        RestResponse response = await rest.ExecuteAsync(request);
+      status=  response.StatusCode.ToString();
+        //return;
+        // Enqueue a background work item.
+        // TaskQueue.QueueBackgroundWorkItem(async cancellationToken =>
+        // {
+        //     var options = new RestClientOptions("https://localhost:7006/api")
+        //     {
+
+        //     };
+        //     using var client = new RestClient(options);
+        //     var request = new RestRequest("/systemlog/SaveLog", Method.Post);
+            //CG key
+            // request.AddHeader("Content-Type", "application/json");
+            // request.AddHeader("Accept", "application/json");
+           // request.AddBody(new SystemLog() });
+           // RestResponse response = await client.ExecuteAsync(request);
+
+            // Simulate a long-running operation (e.g., 5-second delay).
+           // await Task.Delay(4000, cancellationToken);
+            // Increment the counter once the task completes.
+          //  CounterService.Increment();
+       // });
+    }
+    
+
+}

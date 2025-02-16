@@ -44,10 +44,19 @@ namespace WorkerLib.Data
         public string DefCurrency { get; set; }
         public int Decimels { get; set; }
         [JsonIgnore]
-        public List<Users> UserSessions { get; set; }
+        public List<UserModel> UserSessions { get; set; }
         [JsonIgnore]
         public List<ItemModel> itemModels { get; set; }
   
         public bool Connected { get; set; }
+        public string ConBackup { get; set; }
+        public string ConPricing { get; set; }
+        public string NavLogo { get; set; }
+        public string ReportLogo { get; set; }
+        public string AppIcon { get; set; }
+        public CGFileServer FileServer { get; set; }
+        public CGDataCacheModel DataCache { get; set; }
+        public List<SystemJobModel> JobList { get; set; }
+        List<UserModel> IAppState.UserSessions { get; set; }
     }
 }

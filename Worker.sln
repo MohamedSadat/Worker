@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CGQuoye", "CGQuoye\CGQuoye.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerLib", "WorkerLib\WorkerLib.csproj", "{C8D5152A-99DE-4371-931F-2D11A6BBBFAA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoastedServiceLib", "HoastedServiceLib\HoastedServiceLib.csproj", "{F59581A1-E3BE-4614-8F49-38B3718F154E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp1", "BlazorApp1\BlazorApp1.csproj", "{5C259431-F983-4C76-BB1E-CBC0A3D71849}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{C8D5152A-99DE-4371-931F-2D11A6BBBFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8D5152A-99DE-4371-931F-2D11A6BBBFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8D5152A-99DE-4371-931F-2D11A6BBBFAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F59581A1-E3BE-4614-8F49-38B3718F154E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F59581A1-E3BE-4614-8F49-38B3718F154E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F59581A1-E3BE-4614-8F49-38B3718F154E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F59581A1-E3BE-4614-8F49-38B3718F154E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C259431-F983-4C76-BB1E-CBC0A3D71849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C259431-F983-4C76-BB1E-CBC0A3D71849}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C259431-F983-4C76-BB1E-CBC0A3D71849}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C259431-F983-4C76-BB1E-CBC0A3D71849}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
